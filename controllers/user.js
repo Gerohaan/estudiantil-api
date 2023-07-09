@@ -44,8 +44,8 @@ class userController {
       .getOne({
         id: req.params.id
       })
-      .then(client => {
-        return res.status(200).json(client)
+      .then(user => {
+        return res.status(200).json(user)
       })
       .catch(err => {
         return res.status(400).send(err)
