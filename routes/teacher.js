@@ -1,13 +1,11 @@
 var express = require('express')
 var router = express.Router()
-var controller = require('../controllers/user')
-var userValidator = require('../middleware/validator/user')
-var userSchema = require('../middleware/schema/user')
+var controller = require('../controllers/teacher')
+var teacherValidator = require('../middleware/validator/teacher')
+var teacherSchema = require('../middleware/schema/teacher')
 const { body,checkSchema, param } = require('express-validator')
 const validator = require('../middleware/validator') // esta funcion es del paquete express-validator nos devuelve mensae de eroor si lo ay
-const { correo } = require('../middleware/schema/user')
 const auth = require('../middleware/auth')
-//const userValidator = require('../middleware/validator/categoria')// aqui es una comprobacion de que n exist otro ID igual
 
 router.get('/list', 
   auth, 
@@ -16,9 +14,10 @@ router.get('/list',
 
 router.post(
   '/add',
-  checkSchema(userSchema),
-  body('correo').custom(correo => {
-    return userValidator.existsEmail(correo)
+  auth,
+  checkSchema(teacherSchema),
+  body('documentNumber').custom(documentNumber => {
+    return teacherValidator.existsDocument(documentNumber)
   }),
   validator.returnErrors,
   controller.create
@@ -27,7 +26,7 @@ router.get(
   '/show/:id',
   auth,
   param('id').custom(id => {
-    return userValidator.exists(id)
+    return teacherValidator.exists(id)
   }),
   validator.returnErrors,
   controller.show
@@ -36,7 +35,7 @@ router.put(
   '/update/:id',
   auth,
   param('id').custom(id => {
-    return userValidator.exists(id)
+    return teacherValidator.exists(id)
   }),
   validator.returnErrors,
   controller.update
@@ -46,7 +45,7 @@ router.delete(
   '/delete/:id',
   auth,
   param('id').custom(id => {
-    return userValidator.exists(id)
+    return teacherValidator.exists(id)
   }),
   validator.returnErrors,
   controller.delete

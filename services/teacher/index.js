@@ -1,7 +1,7 @@
-const { User } = require('../../models/index')
+const { Teacher } = require('../../models/index')
 
 async function store (params) {
-  return User
+  return Teacher
     .create({
       ...params
     })
@@ -11,7 +11,7 @@ async function store (params) {
 }
 async function getAll (filters) {
     try {
-      return await User.findAll()
+      return await Teacher.findAll()
     } catch (error) {
       throw error
     }
@@ -19,10 +19,10 @@ async function getAll (filters) {
 
 async function update (params, filters) {
   try {
-    await User.update(params, {
+    await Teacher.update(params, {
       where: { ...filters }
     })
-    return await User
+    return await Teacher
     .findOne({
       where: { ...filters }
     })
@@ -32,7 +32,7 @@ async function update (params, filters) {
 }
 
 async function getOne (filters) {
-  return User
+  return Teacher
     .findOne({
       where: { ...filters }
     })
@@ -43,7 +43,7 @@ async function getOne (filters) {
 
 async function destroy (filters) {
   try {
-    return User.destroy({
+    return Teacher.destroy({
       where: { ...filters }
     })
   } catch (error) {
