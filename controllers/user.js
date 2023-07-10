@@ -31,8 +31,8 @@ class userController {
   list = (req, res, next) => {
     return userService
       .getAll()
-      .then(client => {
-        return res.status(200).json(client)
+      .then(user => {
+        return res.status(200).json(user)
       })
       .catch(err => {
         return res.status(400).send(err)
@@ -57,13 +57,8 @@ class userController {
       .update(req.body, {
         id: req.params.id
       })
-      .then(() => {
-        return userService.getOne({
-          id: req.params.id
-        })
-      })
-      .then(client => {
-        return res.status(200).json(client)
+      .then(user => {
+        return res.status(200).json(user)
       })
       .catch(err => {
         res.status(400).send(err)

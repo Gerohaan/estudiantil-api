@@ -25,6 +25,7 @@ router.post(
 )
 router.get(
   '/show/:id',
+  auth,
   param('id').custom(id => {
     return userValidator.exists(id)
   }),
@@ -33,6 +34,7 @@ router.get(
 )
 router.put(
   '/update/:id',
+  auth,
   param('id').custom(id => {
     return userValidator.exists(id)
   }),
@@ -42,6 +44,7 @@ router.put(
 
 router.delete(
   '/delete/:id',
+  auth,
   param('id').custom(id => {
     return userValidator.exists(id)
   }),
