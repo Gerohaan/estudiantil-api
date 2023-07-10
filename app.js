@@ -10,10 +10,10 @@ const dotenv = require('dotenv')
 dotenv.config({
   path: '.env'
 })
-
 //Rutas
 var indexRouter = require('./routes/index')
 var userRouter = require('./routes/user')
+var teacherRouter = require('./routes/teacher')
 //configuracion
 app.set('port', process.env.PORT || 3030)
 app.use(express.json())
@@ -37,10 +37,11 @@ app.use(cookieParser())
 //Rutas use
 app.use('/', indexRouter)
 app.use('/user', userRouter)
+app.use('/teacher', teacherRouter)
 //Rutas use
 
-app.listen(app.get('port'), 'localhost', function () {
-  console.log('Corriendos Servidor Puerto 3030')
+app.listen(app.get('port'), function () {
+  console.log('Corriendos Servidor Puerto '+process.env.PORT+' y el host '+process.env.HOST+'.')
 
   sequelize
     .authenticate()
