@@ -14,7 +14,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Subject.init({
-    name: DataTypes.STRING,
+    name: {
+      type : DataTypes.STRING,
+      allowNull: false,
+      unique: {
+        msg: 'El nombre de la materia se encuentra registrado'
+      }
+    },
     description: DataTypes.STRING
   }, {
     sequelize,
