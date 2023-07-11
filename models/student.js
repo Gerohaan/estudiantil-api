@@ -17,7 +17,13 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     lastName: DataTypes.STRING,
     gender: DataTypes.STRING,
-    documentNumber: DataTypes.STRING
+    documentNumber: {
+      type: DataTypes.STRING,
+      allowNull : false,
+      unique: {
+        msg : 'El documento se encuentra registrado'
+      } 
+    }
   }, {
     sequelize,
     modelName: 'Student',

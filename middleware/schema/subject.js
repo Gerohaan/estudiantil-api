@@ -1,6 +1,6 @@
 const { check, body, checkSchema } = require('express-validator')
 
-const checkTeacher = {
+const checkSubject = {
   name: {
     notEmpty: true,
     errorMessage: 'it cant be empty'
@@ -11,4 +11,4 @@ const checkTeacher = {
   }
 
 }
-module.exports = checkTeacher
+module.exports = checkSubject
