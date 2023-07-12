@@ -14,16 +14,15 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Student.init({
-    name: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    gender: DataTypes.STRING,
-    documentNumber: {
-      type: DataTypes.STRING,
+    id_person: {
+      type: DataTypes.INTEGER,
       allowNull : false,
       unique: {
-        msg : 'El documento se encuentra registrado'
-      } 
-    }
+        msg : 'id se encuentra registrado'
+      }
+    },
+    representative: DataTypes.STRING,
+    status: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Student',

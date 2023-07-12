@@ -14,16 +14,17 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   User.init({
-    name: DataTypes.STRING,
-    correo: {
+    id_person: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull : false,
       unique: {
-          msg: 'El email necesita ser unico'
-      },
+        msg : 'id se encuentra registrado'
+      }
     },
+    type: DataTypes.STRING,
+    email: DataTypes.STRING,
     password: DataTypes.STRING,
-    type: DataTypes.STRING
+    status: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'User',
