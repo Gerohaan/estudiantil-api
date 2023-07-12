@@ -14,7 +14,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Section.init({
-    name: DataTypes.STRING,
+    name: {
+      type : DataTypes.STRING,
+      allowNull: false,
+      unique: {
+        msg: 'El nombre de la sección se encuentra registrado'
+      }
+    },
     description: DataTypes.STRING
   }, {
     sequelize,
