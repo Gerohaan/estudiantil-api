@@ -4,24 +4,35 @@ const jwt = require('jsonwebtoken');
 const authConfig = require('../config/auth');
 
 class userController {
+
+ createUser = async (idPerson, body) => {
+    let paramsUser = {
+      id_person : idPerson,
+      type: body.type,
+      email: body.email,
+      password: body.password,
+      status: body.status
+    }
+    return await userService.store(paramsUser).then(user => {
+      let token = jwt.sign({ user: user }, authConfig.secret, {
+          expiresIn: authConfig.expires
+      })
+      return res.status(200).json({
+        user: user,
+        token: token
+    })
+    }).catch(err => {
+      return res.status(400).send(err)
+    })
+  }
+
   create = (req, res, next) => {
     let password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.rounds));
-    let body = {
-      name: req.body.name,
-      correo: req.body.correo,
-      password: password,
-      type: req.body.type
-    }
+    req.body.password = password 
     return userService
-      .store(body)
-      .then(user => {
-        let token = jwt.sign({ user: user }, authConfig.secret, {
-            expiresIn: authConfig.expires
-        })
-        return res.status(200).json({
-            user: user,
-            token: token
-        })
+      .storePerson(req.body)
+      .then(person => {
+        this.createUser(person.id, req.body)
       })
       .catch(err => {
         return res.status(400).send(err)

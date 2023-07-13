@@ -2,12 +2,12 @@ const userService = require('../../services/user')
 const { correo } = require('../schema/user')
 
 class userValidator {
-    existsEmail = correo => {
+    existsEmail = email => {
         return userService.getOne({
-                correo
+                email
             })
             .then(user => {
-                return user === null ? true : Promise.reject('El correo '+correo+' existe en la base de datos')
+                return user === null ? true : Promise.reject('El correo '+email+' existe en la base de datos')
             })
     }
 

@@ -1,14 +1,14 @@
-const { Persona } = require('../../models/index')
+const { Person } = require('../../models/index')
 
 async function store (params) {
-  return Persona.create({ ...params }).catch(error => {
+  return Person.create({ ...params }).catch(error => {
     console.log(error)
     return Promise.reject(error)
   })
 }
 
 async function getAll (filters) {
-  return Persona.findAll({
+  return Person.findAll({
     where: { ...filters }
   }).catch(error => {
     return Promise.reject(error)
@@ -16,7 +16,7 @@ async function getAll (filters) {
 }
 
 async function getOne (filters) {
-  return Persona.findOne({
+  return Person.findOne({
     where: { ...filters }
   }).catch(error => {
     return Promise.reject(error)
@@ -24,14 +24,14 @@ async function getOne (filters) {
 }
 
 async function update (params, filters) {
-  return Persona.update(params, { where: { ...filters } }).catch(error => {
+  return Person.update(params, { where: { ...filters } }).catch(error => {
     console.log(error)
     return Promise.reject(error)
   })
 }
 
 async function destroy (filters) {
-  return Persona.destroy({ where: { ...filters } }).catch(error => {
+  return Person.destroy({ where: { ...filters } }).catch(error => {
     console.log(error)
     return Promise.reject(error)
   })
