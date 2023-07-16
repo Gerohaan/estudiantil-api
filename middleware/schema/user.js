@@ -1,21 +1,25 @@
 const { check, body, checkSchema } = require('express-validator')
 
 const checkuser = {
-  name: {
+  id_person: {
     notEmpty: true,
-    errorMessage: 'it cant be empty'
-  },
-  correo: {
-    notEmpty: true,
-    errorMessage: 'it cant be empty'
-  },
-  password: {
-    notEmpty: true,
-    errorMessage: 'it cant be empty'
+    errorMessage: 'No puede estar vacío.'
   },
   type: {
     notEmpty: true,
-    errorMessage: 'it cant be empty'
+    errorMessage: 'No puede estar vacío.'
+  },
+  email : {
+    notEmpty: true,
+    errorMessage: 'No puede estar vacío.'
+  },
+  password: {
+    notEmpty: true,
+    errorMessage: 'No puede estar vacío.'
+  },
+  status: {
+    notEmpty: true,
+    errorMessage: 'No puede estar vacío.'
   }
 
 }

@@ -1,21 +1,17 @@
 const { check, body, checkSchema } = require('express-validator')
 
 const checkTeacher = {
-  name: {
+  id_person: {
     notEmpty: true,
-    errorMessage: 'it cant be empty'
+    errorMessage: 'No puede estar vacío.'
   },
-  lastName: {
+  profession: {
     notEmpty: true,
-    errorMessage: 'it cant be empty'
+    errorMessage: 'No puede estar vacío.'
   },
-  gender: {
+  status: {
     notEmpty: true,
-    errorMessage: 'it cant be empty'
-  },
-  documentNumber: {
-    notEmpty: true,
-    errorMessage: 'it cant be empty'
+    errorMessage: 'No puede estar vacío.'
   }
 
 }

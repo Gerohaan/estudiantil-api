@@ -16,6 +16,7 @@ router.get('/list',
 
 router.post(
   '/add',
+  checkSchema(userSchema),
   body('email').custom(email => {
     return userValidator.existsEmail(email)
   }),
