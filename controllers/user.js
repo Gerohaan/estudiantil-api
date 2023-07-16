@@ -5,34 +5,37 @@ const authConfig = require('../config/auth');
 
 class userController {
 
- createUser = async (idPerson, body) => {
-    let paramsUser = {
-      id_person : idPerson,
-      type: body.type,
-      email: body.email,
-      password: body.password,
-      status: body.status
-    }
-    return await userService.store(paramsUser).then(user => {
-      let token = jwt.sign({ user: user }, authConfig.secret, {
-          expiresIn: authConfig.expires
-      })
-      return res.status(200).json({
-        user: user,
-        token: token
-    })
-    }).catch(err => {
-      return res.status(400).send(err)
-    })
-  }
 
-  create = (req, res, next) => {
+  create = async (req, res, next) => {
     let password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.rounds));
     req.body.password = password 
-    return userService
+    return await userService
       .storePerson(req.body)
-      .then(person => {
-        this.createUser(person.id, req.body)
+      .then(async person => {
+        let body = {
+          id: person.id,
+          body: req.body
+        }
+        ////////////Crear Usuario /////////////////
+         let paramsUser = {
+            id_person : body.id,
+            type: body.body.type,
+            email: body.body.email,
+            password: body.body.password,
+            status: body.body.status
+          }
+          await userService.store(paramsUser).then(user => {
+            let token = jwt.sign({ user: user }, authConfig.secret, {
+                expiresIn: authConfig.expires
+            })
+            return res.status(200).json({
+              user: user,
+              token: token
+          })
+          }).catch(err => {
+            return res.status(400).send(err)
+          })
+        ///////////////////////////////////////////
       })
       .catch(err => {
         return res.status(400).send(err)
