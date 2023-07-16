@@ -1,11 +1,51 @@
 const studentService = require('../services/student')
+const userService = require('../services/user')
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const authConfig = require('../config/auth');
 
 class studentController {
-  create = (req, res, next) => {
-    return studentService
-      .store(req.body)
-      .then(student => {
-        return res.status(200).json(student)
+  create = async (req, res, next) => {
+    let password = bcrypt.hashSync(req.body.password, Number.parseInt(authConfig.rounds));
+    req.body.password = password 
+    return await userService
+      .storePerson(req.body)
+      .then(async person => {
+        let body = {
+          id: person.id,
+          body: req.body
+        }
+        let reqStudent = {
+          id_person: person.id,
+          representative: req.body.representative,
+          status: req.body.status
+        }
+        ////////////Crear student /////////////////
+        await studentService.store(reqStudent).then(async student => {
+          ////////////Crear Usuario /////////////////
+          let paramsUser = {
+            id_person : body.id,
+            type: body.body.type,
+            email: body.body.email,
+            password: body.body.password,
+            status: body.body.status
+          }
+          await userService.store(paramsUser).then(user => {
+            let token = jwt.sign({ user: user }, authConfig.secret, {
+                expiresIn: authConfig.expires
+            })
+            return res.status(200).json({
+              user: user,
+              token: token
+          })
+          }).catch(err => {
+            return res.status(400).send(err)
+          })
+          ///////////////////////////////////////////
+        }).catch(err => {
+          return res.status(400).send(err)
+        })
+        ///////////////////////////////////////////
       })
       .catch(err => {
         return res.status(400).send(err)

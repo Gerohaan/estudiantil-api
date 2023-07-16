@@ -2,6 +2,7 @@ var express = require('express')
 var router = express.Router()
 var controller = require('../controllers/teacher')
 var teacherValidator = require('../middleware/validator/teacher')
+var userValidator = require('../middleware/validator/user')
 var teacherSchema = require('../middleware/schema/teacher')
 const { body,checkSchema, param } = require('express-validator')
 const validator = require('../middleware/validator') // esta funcion es del paquete express-validator nos devuelve mensae de eroor si lo ay
@@ -16,8 +17,8 @@ router.post(
   '/add',
   auth,
   checkSchema(teacherSchema),
-  body('documentNumber').custom(documentNumber => {
-    return teacherValidator.existsDocument(documentNumber)
+  body('email').custom(email => {
+    return userValidator.existsEmail(email)
   }),
   validator.returnErrors,
   controller.create
