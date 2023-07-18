@@ -3,11 +3,22 @@ var router = express.Router()
 var controller = require('../controllers/user')
 var userValidator = require('../middleware/validator/user')
 var userSchema = require('../middleware/schema/user')
-const { body,checkSchema, param } = require('express-validator')
+var loginSchema = require('../middleware/schema/login')
+const { body,checkSchema, param, validationResult } = require('express-validator')
 const validator = require('../middleware/validator') // esta funcion es del paquete express-validator nos devuelve mensae de eroor si lo ay
 const { correo } = require('../middleware/schema/user')
 const auth = require('../middleware/auth')
 //const userValidator = require('../middleware/validator/categoria')// aqui es una comprobacion de que n exist otro ID igual
+
+
+router.post('/login',
+  checkSchema(loginSchema),  
+  body('email').custom(email => {
+    return userValidator.existsEmailLogin(email)
+  }),
+  validator.returnErrors,
+  controller.signIn
+)
 
 router.get('/list', 
   auth, 

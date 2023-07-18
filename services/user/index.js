@@ -70,6 +70,16 @@ async function getOne (filters) {
     })
 }
 
+async function getOneSignIn (email) {
+  return User
+    .findOne({
+      where: { email }
+    })
+    .catch(error => {
+      return Promise.reject(error)
+    })
+}
+
 async function destroy (filters) {
   try {
     return User.destroy({
@@ -86,6 +96,7 @@ module.exports = {
   getAll,
   getOne,
   getOnePerson,
+  getOneSignIn,
   update,
   destroy
 }
