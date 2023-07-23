@@ -30,7 +30,11 @@ async function storePerson (params) {
 }
 async function getAll (filters) {
     try {
-      return await User.findAll()
+      return await User.findAll({
+        include: [{
+          association: "persona"
+        }]
+      })
     } catch (error) {
       throw error
     }
@@ -73,7 +77,10 @@ async function getOne (filters) {
 async function getOneSignIn (email) {
   return User
     .findOne({
-      where: { email }
+      where: { email },
+      include: [{
+        association: "persona"
+      }]
     })
     .catch(error => {
       return Promise.reject(error)

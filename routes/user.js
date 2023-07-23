@@ -20,6 +20,11 @@ router.post('/login',
   controller.signIn
 )
 
+router.post('/logout',
+auth,  
+controller.signOut
+)
+
 router.get('/list', 
   auth, 
   controller.list
@@ -56,9 +61,9 @@ router.put(
 router.delete(
   '/delete/:id',
   auth,
-  param('id').custom(id => {
+  /* param('id').custom(id => {
     return userValidator.exists(id)
-  }),
+  }), */
   validator.returnErrors,
   controller.delete
 )

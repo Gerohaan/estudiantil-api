@@ -1,18 +1,18 @@
 const userService = require('../services/user')
+const personService = require('../services/person')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const authConfig = require('../config/auth');
 
 class userController {
 
-   // Login
+  // Login
    signIn(req, res) {
 
     let { email, password } = req.body;
 
     // Buscar usuario
     userService.getOneSignIn(email).then(user => {
-      console.log(user)
         if (!user) {
             res.status(404).json({ msg: "Correo no corresponde a ningun usuario registrado" })
           } else {
@@ -40,6 +40,24 @@ class userController {
       }).catch(err => {
           res.status(500).json(err);
       })
+
+  }
+
+  // Logout
+  signOut(req, res) {
+
+    // Buscar usuario
+    try { 
+      let tokenNew = jwt.sign({ user: 'out' }, authConfig.secret, {
+          expiresIn: '1s'
+      });
+      return res.status(200).json({
+        tokenNew: tokenNew,
+        message: 'Sesión eliminada'
+      })
+    } catch (error) {
+      throw error
+    }
 
   }
 
@@ -131,7 +149,7 @@ class userController {
   }
 
   delete = (req, res, next) => {
-    return userService
+    return personService
       .destroy({
         id: req.params.id
       })
