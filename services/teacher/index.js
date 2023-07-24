@@ -13,7 +13,11 @@ async function store (params) {
 }
 async function getAll (filters) {
     try {
-      return await Teacher.findAll()
+      return await Teacher.findAll({
+        include: [{
+          association: "persona"
+        }]
+      })
     } catch (error) {
       throw error
     }

@@ -18,6 +18,7 @@ var subjectRouter = require('./routes/subject')
 var studentRouter = require('./routes/student')
 var sectionRouter = require('./routes/section')
 var lapsesRouter = require('./routes/lapses')
+var gradesRouter = require('./routes/grades')
 //configuracion
 app.set('port', process.env.PORT || 3030)
 app.use(express.json())
@@ -46,6 +47,7 @@ app.use('/subject', subjectRouter)
 app.use('/student', studentRouter)
 app.use('/section', sectionRouter),
 app.use('/lapses', lapsesRouter),
+app.use('/grades', gradesRouter)
 //Rutas use
 
 app.listen(app.get('port'), function () {

@@ -1,14 +1,14 @@
-const { Lapse } = require('../../models/index')
+const { Grade } = require('../../models/index')
 
 async function store (params) {
-  return Lapse.create({ ...params }).catch(error => {
+  return Grade.create({ ...params }).catch(error => {
     console.log(error)
     return Promise.reject(error)
   })
 }
 
 async function getAll (filters) {
-  return Lapse.findAll({
+  return Grade.findAll({
     where: { ...filters }
   }).catch(error => {
     return Promise.reject(error)
@@ -16,7 +16,7 @@ async function getAll (filters) {
 }
 
 async function getOne (filters) {
-  return Lapse.findOne({
+  return Grade.findOne({
     where: { ...filters }
   }).catch(error => {
     return Promise.reject(error)
@@ -25,14 +25,14 @@ async function getOne (filters) {
 
 async function update (params, id) {
   try {
-    return Lapse.update(params, { where: {  id: id } })  
+    return Grade.update(params, { where: {  id: id } })  
   } catch (error) {
     return Promise.reject(error)
   }
 }
 
 async function destroy (filters) {
-  return Lapse.destroy({ where: { ...filters } }).catch(error => {
+  return Grade.destroy({ where: { ...filters } }).catch(error => {
     console.log(error)
     return Promise.reject(error)
   })
