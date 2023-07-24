@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Lapse.init({
     name: DataTypes.STRING,
-    star_date: DataTypes.STRING,
+    start_date: DataTypes.STRING,
     end_date: DataTypes.STRING
   }, {
     sequelize,

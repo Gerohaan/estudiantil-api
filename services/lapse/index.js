@@ -1,9 +1,7 @@
-const { param } = require('express-validator')
-const { Teacher } = require('../../models/index')
+const { Lapse } = require('../../models/index')
 
 async function store (params) {
-  console.log(params)
-  return Teacher
+  return Lapse
     .create({
       ...params
     })
@@ -13,7 +11,7 @@ async function store (params) {
 }
 async function getAll (filters) {
     try {
-      return await Teacher.findAll()
+      return await Lapse.findAll()
     } catch (error) {
       throw error
     }
@@ -21,10 +19,10 @@ async function getAll (filters) {
 
 async function update (params, filters) {
   try {
-    await Teacher.update(params, {
+    await Lapse.update(params, {
       where: { ...filters }
     })
-    return await Teacher
+    return await Lapse
     .findOne({
       where: { ...filters }
     })
@@ -34,7 +32,7 @@ async function update (params, filters) {
 }
 
 async function getOne (filters) {
-  return Teacher
+  return Lapse
     .findOne({
       where: { ...filters }
     })
@@ -45,7 +43,7 @@ async function getOne (filters) {
 
 async function destroy (filters) {
   try {
-    return Teacher.destroy({
+    return Lapse.destroy({
       where: { ...filters }
     })
   } catch (error) {

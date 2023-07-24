@@ -1,5 +1,6 @@
 const { User } = require('../../models/index')
 const { Person } = require('../../models/index')
+const personService = require('../../services/person')
 
 async function store (params) {
   return await User
@@ -45,6 +46,16 @@ async function update (params, filters) {
     await User.update(params, {
       where: { ...filters }
     })
+    let paramsPerson = {
+      name : params.name,
+      surname: params.surname,
+      gender: params.gender,
+      document: params.document,
+      phone: params.phone,
+      email: params.email,
+      birthDate: params.birthDate,
+    }
+    await personService.update(paramsPerson, params.id_person)
     return await User
     .findOne({
       where: { ...filters }

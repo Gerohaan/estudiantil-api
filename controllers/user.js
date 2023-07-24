@@ -1,5 +1,7 @@
 const userService = require('../services/user')
 const personService = require('../services/person')
+const studentService = require('../services/student')
+const teacherService = require('../services/teacher')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const authConfig = require('../config/auth');
@@ -67,6 +69,31 @@ class userController {
     return await userService
       .storePerson(req.body)
       .then(async person => {
+        /////////////Crear teacher o students//////
+        if(req.body.type === 'Teacher'){
+          let bodyTeacher = {
+            id_person : person.id,
+            profession: req.body.profession,
+            status: req.body.status
+          }
+          try {
+            await teacherService.store(bodyTeacher)
+          } catch (error) {
+            throw error            
+          }
+        }
+        if(req.body.type === 'Student'){
+          let bodyStudent = {
+            id_person : person.id,
+            representative: req.body.representative,
+            status: req.body.status
+          }
+          try {
+            await studentService.store(bodyStudent)
+          } catch (error) {
+            throw error
+          }
+        }
         let body = {
           id: person.id,
           body: req.body

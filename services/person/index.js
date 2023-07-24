@@ -23,11 +23,12 @@ async function getOne (filters) {
   })
 }
 
-async function update (params, filters) {
-  return Person.update(params, { where: { ...filters } }).catch(error => {
-    console.log(error)
+async function update (params, id) {
+  try {
+    return Person.update(params, { where: {  id: id } })  
+  } catch (error) {
     return Promise.reject(error)
-  })
+  }
 }
 
 async function destroy (filters) {

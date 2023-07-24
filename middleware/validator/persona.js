@@ -1,4 +1,4 @@
-const personaService = require('../../services/persona')
+const personaService = require('../../services/person')
 
 class personaValidator {
     exists = id => {
