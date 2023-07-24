@@ -25,7 +25,7 @@ async function getOne (filters) {
 
 async function update (params, id) {
   try {
-    return Lapse.update(params, { where: {  id: id } })  
+    return Lapse.update(params, { where: { ...id } })  
   } catch (error) {
     return Promise.reject(error)
   }
