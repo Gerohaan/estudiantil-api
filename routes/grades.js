@@ -39,6 +39,43 @@ router.get(
   validator.returnErrors,
   controller.show
 )
+router.post(
+  '/add/studentGrade',
+  auth,
+ /*  param('id').custom(id => {
+    return gradesValidator.exists(id)
+  }), */
+  validator.returnErrors,
+  controller.createStudentGrade
+)
+router.post(
+  '/add/subjectGrade',
+  auth,
+ /*  param('id').custom(id => {
+    return gradesValidator.exists(id)
+  }), */
+  validator.returnErrors,
+  controller.createSubjectGrade
+)
+router.get(
+  '/show/student/:id',
+  auth,
+ /*  param('id').custom(id => {
+    return gradesValidator.exists(id)
+  }), */
+  validator.returnErrors,
+  controller.showStudent
+)
+router.get(
+  '/showSubjectGrades',
+  auth,
+ /*  param('id').custom(id => {
+    return gradesValidator.exists(id)
+  }), */
+  validator.returnErrors,
+  controller.showSubjectGrades
+)
+
 router.put(
   '/update/:id',
   auth,

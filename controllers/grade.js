@@ -12,6 +12,31 @@ class gradeController {
         res.status(400).send(err)
       })
   }
+  
+  createSubjectGrade = (req, res, next) => {
+    return gradeService
+      .storeGradeSubject(req.body)
+      .then(newgrade => {
+        return res.status(200).json(newgrade)
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(400).send(err)
+      })
+  }
+
+  createStudentGrade = (req, res, next) => {
+    return gradeService
+      .storeGradeStudent(req.body)
+      .then(newgrade => {
+        return res.status(200).json(newgrade)
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(400).send(err)
+      })
+  }
+  
 
   list = (req, res, next) => {
     return gradeService
@@ -25,10 +50,35 @@ class gradeController {
       })
   }
 
+  showSubjectGrades = (req, res, next) => {
+    return gradeService
+      .getAllSubjectGrades()
+      .then(grade => {
+        res.status(200).json(grade)
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(400).send(err)
+      })
+  }
+
   show = (req, res, next) => {
     return gradeService
       .getOne({
         id: req.params.id
+      })
+      .then(grade => {
+        res.status(200).json(grade)
+      })
+      .catch(err => {
+        res.status(400).send(err)
+      })
+  }
+
+  showStudent = (req, res, next) => {
+    return gradeService
+      .getOneStudent({
+        id_student: req.params.id
       })
       .then(grade => {
         res.status(200).json(grade)
