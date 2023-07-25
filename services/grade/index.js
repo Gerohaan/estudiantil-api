@@ -9,7 +9,18 @@ async function store (params) {
 
 async function getAll (filters) {
   return Grade.findAll({
-    where: { ...filters }
+    where: { ...filters },
+    include: [
+      {
+        association: "teacher",
+        include: [{
+          association: "persona"
+        }]
+      },
+      {
+        association: "section"
+      }
+    ]
   }).catch(error => {
     return Promise.reject(error)
   })
@@ -25,7 +36,9 @@ async function getOne (filters) {
 
 async function update (params, id) {
   try {
-    return Grade.update(params, { where: {  id: id } })  
+    return await Grade.update(params, { 
+      where: {  ...id } 
+    })  
   } catch (error) {
     return Promise.reject(error)
   }

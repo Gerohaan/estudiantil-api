@@ -38,22 +38,33 @@ class gradeController {
       })
   }
 
-  update = (req, res, next) => {
-    return gradeService
-      .update(req.body, {
-        id: req.params.id
-      })
-      .then(() => {
-        return gradeService.getOne({
-          id: req.params.id
-        })
-      })
-      .then(grade => {
-      return  res.status(200).json(grade)
-      })
-      .catch(err => {
-        console.log(err)
-        res.status(400).send(err)
+  update = async (req, res, next) => {
+      await gradeService.getOne({ id: req.params.id }).then(async respGrade => {
+        if(respGrade.id_teacher !== req.body.id_teacher){
+         await gradeService.getOne({ ...req.body.id_teacher }).then(respFindT => {
+            if(respFindT !== null){
+              res.status(400).send({ errors: [ { msg : 'El docente ya se encuentra registrado en otro grado' }] })
+            }else{
+              gradeService.update(req.body, {
+                id: req.params.id
+              }).then(() => {
+                res.status(200).json({ success: 'Grado actualizado' })
+              }).catch(error => {
+                res.status(400).send(error)
+              })
+            }
+          })
+        }else{
+          await gradeService.update(req.body, {
+            id: req.params.id
+          }).then(() => {
+            res.status(200).json({ success: 'Grado actualizado' })
+          }).catch(error => {
+            res.status(400).send(error)
+          })
+        }
+      }).catch(error => {
+        res.status(400).send(error)
       })
   }
 
@@ -61,7 +72,7 @@ class gradeController {
     return gradeService
       .destroy({ id: req.params.id })
       .then(() => {
-        res.status(200).json({ success: 'grade Eliminada' })
+        res.status(200).json({ success: 'Grado eliminado' })
       })
       .catch(err => {
         console.log(err)
