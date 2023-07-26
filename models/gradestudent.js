@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       GradeStudent.belongsTo(models.Grade, { as: "grade", foreignKey: "id_grade" });
+      GradeStudent.belongsTo(models.Student, { as: "student", foreignKey: "id_student" });
     }
   }
   GradeStudent.init({

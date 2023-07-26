@@ -23,6 +23,26 @@ async function storeGradeSubject (params) {
   })
 }
 
+async function getAllStudentsGrades (filters) {
+  return GradeStudent.findAll({
+    where: { ...filters },
+    include: [
+      {
+        association: "grade"
+      },
+      {
+        association: "student",
+        include: [{
+          association: "persona"
+        }]
+      }
+    ]
+  }).catch(error => {
+    return Promise.reject(error)
+  })
+}
+
+
 async function getAllSubjectGrades (filters) {
   return GradeSubject.findAll({
     where: { ...filters },
@@ -60,6 +80,14 @@ async function getAll (filters) {
 
 async function getOne (filters) {
   return Grade.findOne({
+    where: { ...filters }
+  }).catch(error => {
+    return Promise.reject(error)
+  })
+}
+
+async function getOneSubject (filters) {
+  return GradeSubject.findOne({
     where: { ...filters }
   }).catch(error => {
     return Promise.reject(error)
@@ -105,6 +133,20 @@ async function update (params, id) {
   }
 }
 
+async function destroyStudent (filters) {
+  return GradeStudent.destroy({ where: { ...filters } }).catch(error => {
+    console.log(error)
+    return Promise.reject(error)
+  })
+}
+
+async function destroySubject (filters) {
+  return GradeSubject.destroy({ where: { ...filters } }).catch(error => {
+    console.log(error)
+    return Promise.reject(error)
+  })
+}
+
 async function destroy (filters) {
   return Grade.destroy({ where: { ...filters } }).catch(error => {
     console.log(error)
@@ -119,6 +161,10 @@ module.exports = {
   storeGradeStudent,
   storeGradeSubject,
   getAllSubjectGrades,
+  getAllStudentsGrades,
+  getOneSubject,
   update,
-  destroy
+  destroy,
+  destroySubject,
+  destroyStudent
 }

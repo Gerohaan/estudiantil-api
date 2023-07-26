@@ -42,17 +42,17 @@ router.get(
 router.post(
   '/add/studentGrade',
   auth,
- /*  param('id').custom(id => {
-    return gradesValidator.exists(id)
-  }), */
+  body('id_student').custom(id_student => {
+    return gradesValidator.existsIdtudent(id_student)
+  }),
   validator.returnErrors,
   controller.createStudentGrade
 )
 router.post(
   '/add/subjectGrade',
   auth,
- /*  param('id').custom(id => {
-    return gradesValidator.exists(id)
+  /* body('id_subject').custom(id_subject => {
+    return gradesValidator.existsIdSubject(id_subject)
   }), */
   validator.returnErrors,
   controller.createSubjectGrade
@@ -66,6 +66,17 @@ router.get(
   validator.returnErrors,
   controller.showStudent
 )
+router.get(
+  '/showStudentsGrades',
+  auth,
+ /*  param('id').custom(id => {
+    return gradesValidator.exists(id)
+  }), */
+  validator.returnErrors,
+  controller.showStudentsGrades
+)
+
+
 router.get(
   '/showSubjectGrades',
   auth,
@@ -85,7 +96,6 @@ router.put(
   validator.returnErrors,
   controller.update
 )
-
 router.delete(
   '/delete/:id',
   auth,
@@ -94,6 +104,26 @@ router.delete(
   }),
   validator.returnErrors,
   controller.delete
+)
+
+router.delete(
+  '/deleteStudent/:id',
+  auth,
+  /* param('id').custom(id => {
+    return gradesValidator.exists(id)
+  }), */
+  validator.returnErrors,
+  controller.deleteStudent
+)
+
+router.delete(
+  '/deleteSubject/:id',
+  auth,
+  /* param('id').custom(id => {
+    return gradesValidator.exists(id)
+  }), */
+  validator.returnErrors,
+  controller.deleteSubject
 )
 
 module.exports = router

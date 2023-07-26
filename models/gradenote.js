@@ -11,29 +11,28 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      GradeNote.belongsTo(models.Grade, { as: "grade", foreignKey: "id_grade" });
+      GradeNote.belongsTo(models.Subject, { as: "subject", foreignKey: "id_subject" });
+      GradeNote.belongsTo(models.Student, { as: "student", foreignKey: "id_student" });
+      GradeNote.belongsTo(models.Lapse, { as: "lapse", foreignKey: "id_lapse" });
     }
   }
   GradeNote.init({
     id_grade: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: {
-        msg : 'id se encuentra registrado'
-      }
+    },
+    id_subject: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
     id_student: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: {
-        msg : 'id se encuentra registrado'
-      }
     },
     id_lapse: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: {
-        msg : 'id se encuentra registrado'
-      }
     },
     value: {
       type: DataTypes.INTEGER,

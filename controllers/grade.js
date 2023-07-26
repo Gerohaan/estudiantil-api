@@ -50,6 +50,18 @@ class gradeController {
       })
   }
 
+  showStudentsGrades = (req, res, next) => {
+    return gradeService
+      .getAllStudentsGrades()
+      .then(grade => {
+        res.status(200).json(grade)
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(400).send(err)
+      })
+  }
+
   showSubjectGrades = (req, res, next) => {
     return gradeService
       .getAllSubjectGrades()
@@ -123,6 +135,32 @@ class gradeController {
       .destroy({ id: req.params.id })
       .then(() => {
         res.status(200).json({ success: 'Grado eliminado' })
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(400).send(err)
+      })
+  }
+
+  
+  deleteStudent = (req, res, next) => {
+    return gradeService
+      .destroyStudent({ id: req.params.id })
+      .then(() => {
+        res.status(200).json({ success: 'Estudiante eliminado' })
+      })
+      .catch(err => {
+        console.log(err)
+        res.status(400).send(err)
+      })
+  }
+
+
+  deleteSubject = (req, res, next) => {
+    return gradeService
+      .destroySubject({ id: req.params.id })
+      .then(() => {
+        res.status(200).json({ success: 'Materia eliminada' })
       })
       .catch(err => {
         console.log(err)
